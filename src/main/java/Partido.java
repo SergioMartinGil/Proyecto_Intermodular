@@ -29,7 +29,6 @@ public class Partido {
 
     //Getters y Setters
 
-
     public long getIdPartido() {
         return idPartido;
     }
@@ -90,8 +89,8 @@ public class Partido {
         this.arbitro = arbitro;
         arbitro.sumarPartidoArbitrado();
     }
-    //toString
 
+    //toString
     @Override
     public String toString() {
         String infoPartido;

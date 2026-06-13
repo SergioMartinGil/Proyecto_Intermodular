@@ -78,7 +78,6 @@ public class Torneo {
 
         return new Torneo(nombre, temporada);
     }
-
     public void añadirEquipo(String nombreEquipo) throws ExceptionNombreEquipoInvalido {
         if (nombreEquipo == null || nombreEquipo.isBlank()){
             throw new ExceptionNombreEquipoInvalido("Error, el nombre no puede estar vacio");
@@ -97,29 +96,6 @@ public class Torneo {
             }
         }
         throw new ExceptionEquipoNoEncontrado("No se ha encontrado el equipo: " + nombreEquipo);
-    }
-    public void crearPartido(String nombreLocal, String nombreVisitante)  throws ExceptionPartidoNoEncontrado, ExceptionEquipoNoEncontrado {
-        Equipo equipoLocal = mostrarEquipos(nombreLocal);
-        Equipo equipoVisitante = mostrarEquipos(nombreVisitante);
-
-        if (equipoLocal == null) {
-            throw new ExceptionPartidoNoEncontrado("Error, no existe el equipo local " + nombreLocal);
-        }
-
-        if (equipoVisitante == null) {
-
-            throw new ExceptionPartidoNoEncontrado("No existe el equipo visitante " + nombreVisitante);
-        }
-
-        if (equipoLocal == equipoVisitante) {
-
-            throw new ExceptionPartidoNoEncontrado("Un equipo no puede jugar contra si mismo");
-        }
-
-        Partido partido = new Partido(equipoLocal, equipoVisitante);
-        partidos.add(partido);
-
-        System.out.println("Partido creado: " + equipoLocal.getNombre() + " vs " + equipoVisitante.getNombre());
     }
     public void mostrarClasificacion() {
 
@@ -148,6 +124,17 @@ public class Torneo {
             );
         }
     }
+    public Arbitro buscarArbitro(String nombreArbitro) {
+        for (Arbitro arbitro : arbitros) {
+            if (arbitro.getNombre().equalsIgnoreCase(nombreArbitro)) {
+                return arbitro;
+            }
+        }
+
+        return null;
+    }
+
+    //Metodos a mejorar en el futuro
     public void introducirResultado(int numeroPartido, int golesLocal, int golesVisitante) {
 
         if (numeroPartido < 1 || numeroPartido > partidos.size()) {
@@ -194,15 +181,6 @@ public class Torneo {
 
         System.out.println("Árbitro añadido correctamente.");
     }
-    public Arbitro buscarArbitro(String nombreArbitro) {
-        for (Arbitro arbitro : arbitros) {
-            if (arbitro.getNombre().equalsIgnoreCase(nombreArbitro)) {
-                return arbitro;
-            }
-        }
-
-        return null;
-    }
     public void asignarArbitroAPartido(int numeroPartido, String nombreArbitro) {
         if (numeroPartido < 1 || numeroPartido > partidos.size()) {
             System.out.println("Número de partido incorrecto.");
@@ -221,6 +199,7 @@ public class Torneo {
 
         System.out.println("Árbitro asignado correctamente.");
     }
+    
         //ToString
     @Override
     public String toString() {

@@ -86,18 +86,6 @@ public class MetodosDAOGuay {
     }
 
 
-
-
-    //METODO DE CLASIFICACION
-
-
-
-
-
-
-
-
-
     //METODOS DE EQUIPO
     public void insertarEquipo(Connection conn, Equipo equipo) {
         // SQL's preparadas

@@ -33,6 +33,8 @@ public class InterfazMenu extends JFrame {
         getContentPane().setBackground(COLOR_FONDO);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
+        //ENCABEZADO PRINCIPAL
+
         JLabel lbl1 = new JLabel("TU LIGA", SwingConstants.CENTER);
         lbl1.setFont(new Font("SansSerif", Font.BOLD, 48));
         lbl1.setForeground(COLOR_BLANCO);
@@ -48,16 +50,17 @@ public class InterfazMenu extends JFrame {
         lblSub.setForeground(COLOR_AZUL);
         lblSub.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        //TAMAÑO DEL ENCABEZADO
         add(Box.createVerticalStrut(40));
         add(lbl1); add(lbl2);
         add(Box.createVerticalStrut(8));
         add(lblSub);
         add(Box.createVerticalStrut(40));
 
+        //BOTONES DE LA INTERFAZ
         JPanel btnTorneo    = crearBoton("+",  "AÑADIR TORNEO",         "Crea un nuevo torneo");
         JPanel btnEquipo    = crearBoton("👥", "AÑADIR EQUIPO",         "Registra un equipo");
-        JPanel btnArbitro   = crearBoton("🟨", "AÑADIR ÁRBITRO",        "Registra un árbitro");
-        JPanel btnJugador   = crearBoton("👟", "AÑADIR JUGADOR",        "Añade jugador a un equipo");
+
         JPanel btnPartido   = crearBoton("⚽", "CREAR PARTIDO",         "Programa un encuentro");
         JPanel btnResultado = crearBoton("📝", "INTRODUCIR RESULTADO",  "Actualiza el marcador");
         JPanel btnTabla     = crearBoton("📊", "TABLA DE PUNTOS",       "Consulta la clasificación");
@@ -78,8 +81,6 @@ public class InterfazMenu extends JFrame {
 
         add(btnTorneo);    add(Box.createVerticalStrut(12));
         add(btnEquipo);    add(Box.createVerticalStrut(12));
-        add(btnArbitro);   add(Box.createVerticalStrut(12));
-        add(btnJugador);   add(Box.createVerticalStrut(12));
         add(btnPartido);   add(Box.createVerticalStrut(12));
         add(btnResultado); add(Box.createVerticalStrut(12));
         add(btnTabla);     add(Box.createVerticalStrut(40));

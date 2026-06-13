@@ -16,8 +16,6 @@ public class Arbitro {
     }
 
     //Getters y Setters
-
-
     public String getNombre() {
         return nombre;
     }

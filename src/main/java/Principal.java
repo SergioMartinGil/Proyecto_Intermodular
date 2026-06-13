@@ -6,28 +6,7 @@ public class Principal {
     public static void main(String[] args) {
 
         System.out.println("Proyecto de futboleros");
-
         MetodosDAOGuay torneobd = new MetodosDAOGuay();
-        Torneo torneo = new Torneo("Copa Campeones", "2025-2026");
-
-        torneo.añadirEquipo("Barcelona");
-        torneo.añadirEquipo("Real Madrid");
-        torneo.añadirEquipo("Atlético Madrid");
-
-        torneo.crearPartido("Barcelona", "Real Madrid");
-        torneo.crearPartido("Barcelona", "Atlético Madrid");
-        torneo.crearPartido("Real Madrid", "Atlético Madrid");
-
-        torneo.introducirResultado(1, 2, 1);
-        torneo.introducirResultado(2, 3, 0);
-        torneo.introducirResultado(3, 1, 1);
-
-        torneo.añadirJugadorAEquipo("Barcelona", "Pedri", 8, "Centrocampista");
-        torneo.añadirJugadorAEquipo("Barcelona", "Lewandowski", 9, "Delantero");
-        torneo.añadirJugadorAEquipo("Barcelona", "Hylan Karcenty", 7, "Delantero");
-
-        torneo.mostrarJugadoresEquipo("Barcelona");
-
         Torneo t1 = new Torneo("Liga", "2025");
         MetodosDAOGuay daoguay = new MetodosDAOGuay();
         try(

@@ -37,7 +37,7 @@ public class Jugador {
     }
 
 
-    //Metodos Propios
+    //Metodos Propios - Implementación en el futuro
     public void marcarGol() {
         goles++;
     }
