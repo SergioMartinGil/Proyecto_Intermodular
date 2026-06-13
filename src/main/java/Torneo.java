@@ -1,7 +1,13 @@
+import ExcepcionesPersonalizadas.ExcepcionTorneoInvalido;
 import ExcepcionesPersonalizadas.ExceptionEquipoNoEncontrado;
 import ExcepcionesPersonalizadas.ExceptionNombreEquipoInvalido;
 import ExcepcionesPersonalizadas.ExceptionPartidoNoEncontrado;
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
+import com.mysql.jdbc.Statement;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Torneo {
@@ -16,6 +22,9 @@ public class Torneo {
     private ArrayList<Arbitro> arbitros;
 
     //Contructores
+    public Torneo(String nombre){
+        this.nombre = nombre;
+    }
     public Torneo( String nombre, String temporada){
         this.idTorneo = cuentaIds+1;
         this.nombre = nombre;
@@ -27,9 +36,50 @@ public class Torneo {
 
     //Getters y Setters
 
-    //Metodos propios
+    public long getIdTorneo() {
+        return idTorneo;
+    }
 
-    public void añadirEquipo(String nombreEquipo, String ciudad) throws ExceptionNombreEquipoInvalido {
+    public long getCuentaIds() {
+        return cuentaIds;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getTemporada() {
+        return temporada;
+    }
+
+    public ArrayList<Equipo> getEquipos() {
+        return equipos;
+    }
+    public ArrayList<Partido> getPartidos() {
+        return partidos;
+    }
+    public ArrayList<Arbitro> getArbitros() {
+        return arbitros;
+    }
+
+    //Metodos propios
+    public static Torneo crearTorneo(String nombre, String temporada)
+            throws ExcepcionTorneoInvalido {
+
+        if (nombre == null || nombre.isBlank()) {
+            throw new ExcepcionTorneoInvalido("El nombre del torneo no puede estar vacío.");
+        }
+        if (nombre.matches(".*\\d.*")) {
+            throw new ExcepcionTorneoInvalido("El nombre del torneo no puede contener números.");
+        }
+        if (temporada == null || temporada.isBlank()) {
+            throw new ExcepcionTorneoInvalido("La temporada no puede estar vacía.");
+        }
+
+        return new Torneo(nombre, temporada);
+    }
+
+    public void añadirEquipo(String nombreEquipo) throws ExceptionNombreEquipoInvalido {
         if (nombreEquipo == null || nombreEquipo.isBlank()){
             throw new ExceptionNombreEquipoInvalido("Error, el nombre no puede estar vacio");
         }
@@ -37,7 +87,7 @@ public class Torneo {
             throw new ExceptionNombreEquipoInvalido("Error, no puede contener numeros");
         }
 
-        Equipo equipo = new Equipo(nombreEquipo, ciudad);
+        Equipo equipo = new Equipo(nombreEquipo);
         equipos.add(equipo);
     }
     public Equipo mostrarEquipos(String nombreEquipo) throws ExceptionEquipoNoEncontrado{
@@ -48,7 +98,7 @@ public class Torneo {
         }
         throw new ExceptionEquipoNoEncontrado("No se ha encontrado el equipo: " + nombreEquipo);
     }
-    public void crearPartido(String nombreLocal, String nombreVisitante) throws ExceptionPartidoNoEncontrado {
+    public void crearPartido(String nombreLocal, String nombreVisitante)  throws ExceptionPartidoNoEncontrado, ExceptionEquipoNoEncontrado {
         Equipo equipoLocal = mostrarEquipos(nombreLocal);
         Equipo equipoVisitante = mostrarEquipos(nombreVisitante);
 
@@ -71,38 +121,32 @@ public class Torneo {
 
         System.out.println("Partido creado: " + equipoLocal.getNombre() + " vs " + equipoVisitante.getNombre());
     }
-    public void mostrarTablaPuntos() {
+    public void mostrarClasificacion() {
 
-        equipos.sort((e1, e2) -> {
-            if (e2.getPuntos() != e1.getPuntos()) {
-                return e2.getPuntos() - e1.getPuntos();
+        System.out.println("==============================================");
+        System.out.println("TORNEO: " + nombre);
+        System.out.println("TEMPORADA: " + temporada);
+        System.out.println("==============================================");
+
+        equipos.sort((a, b) -> {
+            if (b.getPuntos() != a.getPuntos()) {
+                return b.getPuntos() - a.getPuntos();
             }
-
-            return e2.getDiferenciaGoles() - e1.getDiferenciaGoles();
+            return b.getDiferenciaGoles() - a.getDiferenciaGoles();
         });
 
-        System.out.println("===========================================================================");
-        System.out.printf("%-5s %-20s %-5s %-5s %-5s %-5s %-5s %-5s %-5s %-5s%n",
-                "Pos", "Club", "PJ", "G", "E", "P", "GF", "GC", "DG", "Pts");
-        System.out.println("===========================================================================");
-
-        for (int i = 0; i < equipos.size(); i++) {
-            Equipo equipo = equipos.get(i);
-
-            System.out.printf("%-5d %-20s %-5d %-5d %-5d %-5d %-5d %-5d %-5d %-5d%n",
-                    i + 1,
-                    equipo.getNombre(),
-                    equipo.getPartidosJugados(),
-                    equipo.getGanados(),
-                    equipo.getEmpatados(),
-                    equipo.getPerdidos(),
-                    equipo.getGolesFavor(),
-                    equipo.getGolesContra(),
-                    equipo.getDiferenciaGoles(),
-                    equipo.getPuntos());
+        for (Equipo equipo : equipos) {
+            System.out.println(
+                    equipo.getNombre() +
+                            " | Pts: " + equipo.getPuntos() +
+                            " | PJ: " + equipo.getPartidosJugados() +
+                            " | G: " + equipo.getGanados() +
+                            " | E: " + equipo.getEmpatados() +
+                            " | P: " + equipo.getPerdidos() +
+                            " | GF: " + equipo.getGolesFavor() +
+                            " | GC: " + equipo.getGolesContra()
+            );
         }
-
-        System.out.println("===========================================================================");
     }
     public void introducirResultado(int numeroPartido, int golesLocal, int golesVisitante) {
 

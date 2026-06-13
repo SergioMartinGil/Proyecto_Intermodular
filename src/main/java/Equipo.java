@@ -6,6 +6,7 @@ public class Equipo {
 
     //Atributos
     private long idEquipo;
+    private String ciudad;
     private String nombre;
     private int puntos;
     private int partidosJugados;
@@ -18,7 +19,7 @@ public class Equipo {
     private int diferenciaGoles;
 
     //Constructores
-    public Equipo(String nombre, String ciudad) {
+    public Equipo(String nombre) {
         this.nombre = nombre;
         this.puntos = 0;
         this.partidosJugados = 0;
@@ -33,6 +34,10 @@ public class Equipo {
     //Getters y Setters
     public String getNombre() {
         return nombre;
+    }
+
+    public String getCiudad() {
+        return ciudad;
     }
 
     public int getPuntos() {
